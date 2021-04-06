@@ -118,13 +118,15 @@
 		let i;
 		for (i = 0; i < 5; i++) {
 
-			var marker = L.marker([data[i].lat, data[i].lon], { icon: data[i].icon, riseOnHover: true, clickable: true }).addTo(map)
-				.bindPopup(data[i].title)
-				.openPopup().on('click', zoomIn);
+			var marker = L.marker([data[i].lat, data[i].lon], { icon: data[i].icon, riseOnHover: true, clickable: true, title : data[i].title }).addTo(map)
+				.on('click', zoomIn);
+			marker.title = data[i].title;
 		}
 
 		function zoomIn() {   //zoom in when you click the marker
+			this.bindPopup(this.title).openPopup();
 			map.setView([this.getLatLng().lat, this.getLatLng().lng], 18);
+
 		}
 
 		map.setView([32.7157, -117.1611], 17); // starting view
