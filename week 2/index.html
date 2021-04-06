@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	<title>Hello World</title>
+	<meta charset="utf-8" />
+
+	<!-- style sheets -->
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+	<div class="header" style="background-color:rgb(2, 6, 10); font-size:xx-large;
+	 font-weight: 700; color:seashell;">
+		Eli's Map
+	</div>
+
+	<div class="sidebar" style="font-weight: 700;">
+		<h2>Places I've Lived</h2>
+		This map shows the cities that I have lived in throughout my life. Beginning with San Diego California where I
+		was born, then to Ventura where I grew up and lived most of my life, then to Fort Lee Virginia where I spent
+		about a year in military training before being stationed in Camp Lejeune NC for about 4 years. The last entry is
+		in Los Angeles where I am currently living.
+	</div>
+	<div class="content">
+		<div id="map"></div>
+	</div>
+
+	<script>
+
+		var map = L.map('map').setView([32.7157, -117.1611], 10);
+
+		var sd = L.icon({
+			iconUrl: 'sd.jpg',
+
+			iconSize: [80, 80], // size of the icon
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var vta = L.icon({
+			iconUrl: 'vta.jpg',
+
+			iconSize: [80, 80], // size of the icon
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var fl = L.icon({
+			iconUrl: 'fl.jpg',
+
+			iconSize: [80, 80], // size of the icon
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var cl = L.icon({
+			iconUrl: 'cl.jpg',
+
+			iconSize: [80, 80], // size of the icon
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var la = L.icon({
+			iconUrl: 'la.jpg',
+
+
+			iconSize: [80, 80], // size of the icon
+			iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+			popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		let data = [
+			{
+				'title': 'San Diego, where I was born',
+				'lat': 32.7157,
+				'lon': -117.1611,
+				'icon': sd
+			},
+			{
+				'title': 'Ventura, where I grew up',
+				'lat': 34.2805,
+				'lon': -119.2945,
+				'icon': vta
+			},
+			{
+				'title': 'Fort Lee VA, where I spent a year in training',
+				'lat': 37.2490,
+				'lon': -77.3382,
+				'icon': fl
+			},
+			{
+				'title': 'Camp Lejeune, where I was stationed for about 4 years',
+				'lat': 34.6251,
+				'lon': -77.4013,
+				'icon': cl
+			},
+			{
+				'title': 'LA, where I am now',
+				'lat': 34.0522,
+				'lon': -118.2437,
+				'icon': la
+			}
+		]
+
+
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		// loop through data
+		let i;
+		for (i = 0; i < 5; i++) {
+
+			var marker = L.marker([data[i].lat, data[i].lon], { icon: data[i].icon, riseOnHover: true, clickable: true }).addTo(map)
+				.bindPopup(data[i].title)
+				.openPopup().on('click', zoomIn);
+		}
+
+		function zoomIn() {   //zoom in when you click the marker
+			map.setView([this.getLatLng().lat, this.getLatLng().lng], 18);
+		}
+
+		map.setView([32.7157, -117.1611], 17); // starting view
+
+	</script>
+
+</body>
+
+</html>
